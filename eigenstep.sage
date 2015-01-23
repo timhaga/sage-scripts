@@ -4,7 +4,7 @@
 
 #Example from Fickus et al.
 N = 5
-d = 3 
+d = 3
 x = 2/3
 y = 2/3
 lA = matrix([[0,0,0,0,0,0],[0,1,2-y,5/3,5/3,5/3],[0,0,y,4/3-x,5/3,5/3],[0,0,0,x,2/3,5/3]])
@@ -39,7 +39,7 @@ for n in [1..N-1]:
 				deleter = true
 		if deleter == true:
 			del I[m-1]
-			
+
 			for m_2 in J:
 				if lA[m_2][n+1] == lA[m][n]:
 					m_3 = m_2
@@ -48,7 +48,7 @@ for n in [1..N-1]:
 	pi_I = Permutation(list(I) + list(Set([1..d]).difference(I))).inverse()
 	Pi_I = pi_I.to_matrix()
 	pi_J = Permutation(list(J) + list(Set([1..d]).difference(J))).inverse()
-	Pi_J = pi_J.to_matrix()	
+	Pi_J = pi_J.to_matrix()
 
 	#step B.3
 	#v is a size R vector but is filled up with padding zeros. So just set it to size d.
@@ -57,15 +57,15 @@ for n in [1..N-1]:
 	for m in I:
 		I_1 = list(Set(I).difference(Set([m])))
 		v[pi_I[m-1]-1,0] = sqrt(-(prod((lA[m][n] - lA[m_2][n+1]) for m_2 in J))/(prod((lA[m][n] - lA[m_2][n]) for m_2 in I_1)))
-	
-	for m_1 in J:	
+
+	for m_1 in J:
 		J_1 = list(Set(J).difference(Set([m_1])))
 		w[pi_J[m_1-1]-1,0] = sqrt((prod((lA[m_1][n+1] - lA[m_2][n]) for m_2 in I))/(prod((lA[m_1][n+1] - lA[m_2][n+1]) for m_2 in J_1)))
 
 	#step B.4
 	#Compute the next frame vector
 	F[:,n] = U*V*Pi_I.transpose()*v
-	
+
 	#step B.5
 	W = matrix(SR,d,d)
 	for m in I:
@@ -73,7 +73,7 @@ for n in [1..N-1]:
 			W[pi_I[m-1]-1,pi_J[m_1-1]-1] = ((1/(lA[m_1][n+1] - lA[m][n]))*v[pi_I[m-1]-1,0]*w[pi_J[m_1-1]-1,0]).simplify_full()
 	for i in range(R+1,d+1):
 		W[i-1,i-1] = 1
-	
+
 	U = U*V*Pi_I.transpose()*W*Pi_J
 
 # end
