@@ -11,7 +11,5 @@ eigensteps.sage is a ugly sage script - more POC as actually usefull.
 
  - you MUST provide a matrix lA with valid eigensteps.
  - this matrix MUST have the first row all zero.
- - you must provide valid values for N (number of frame vectors) and
-   d (dimension of space)
 
 That script is realy not for publishing

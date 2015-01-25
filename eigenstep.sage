@@ -3,18 +3,17 @@
 # This file is released under the GPLv2
 
 #Example from Fickus et al.
-N = 5
-d = 3
 x = 2/3
 y = 2/3
 lA = matrix([[0,0,0,0,0,0],[0,1,2-y,5/3,5/3,5/3],[0,0,y,4/3-x,5/3,5/3],[0,0,0,x,2/3,5/3]])
 
 #Example from the whiteboard
 #x = 1/3
-#N = 4
-#d = 2
 #lA =  matrix([[0,0,0,0,0],[0,1,2-x,2,2],[0,0,x,1,2]])
 
+#Determine N and d
+d = lA.dimensions()[0] - 1
+N = lA.dimensions()[1] - 1
 #Choose f_1 as first unit vector
 F = matrix(SR,d,N)
 F[0,0] = 1
