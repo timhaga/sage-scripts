@@ -15,7 +15,7 @@ def PolytopeOfEigensteps(N, d):
         for j in xrange(s, e+1):
             # Create variables for all but one entryy
             if j != e:
-                E[j,k] = var("x_%d_%d" % (k,j))
+                E[j,k] = var("x_%d_%d" % (d-j, k))
             # Choose remaining entry to satisfy column sum conditions
             else:
                 E[j,k] = k
@@ -39,9 +39,20 @@ def PolytopeOfEigensteps(N, d):
             s = max(0,d-k)
             e = min(d-1, N-k-1)
             for j in xrange(s, e):
-                x = var("x_%d_%d" % (k,j))
+                x = var("x_%d_%d" % (d-j, k))
                 ineq_l.append(ineq.coefficient(x,1))
         ineqs_l.append(ineq_l)
 
     # Create the polytope
-    return Polyhedron(ieqs=ineqs_l, base_ring=QQ, backend="ppl")
+    return Polyhedron(ieqs=ineqs_l, backend='ppl', base_ring=QQ)
+
+def anInteriorPoint(N, d):
+        p = []
+        for k in xrange(1, N):
+            s = max(0,d-k)
+            e = min(d-1, N-k-1)
+            for j in xrange(s, e):
+                i = d-j
+                n = k
+                p.append((d+n-2*i+1)/d)
+        return p
