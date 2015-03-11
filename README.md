@@ -1,12 +1,12 @@
 # a collection of sage scripts
 
-## frames.sage -- calculations with frames and eigensteps
+## frames.sage — calculations with frames and eigensteps
 
 `frames.sage` can do the following things:
 
  - `Eigensteps(F)` calculates the eigensteps of a frame F
- - `EigenstepsGram(F) calculate outer eigensteps
- - `FrameFromEigensteps(lam) constructs a frame from a given
+ - `EigenstepsGram(F)` calculate outer eigensteps
+ - `FrameFromEigensteps(lam)` constructs a frame from a given
    sequence of eigensteps
  - `PolytopeOfEigensteps(mu, lam)` constructs the polytope of
    eigensteps for given sequences of norm squares and eigenvalues
