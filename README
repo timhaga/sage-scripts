@@ -1,15 +1,25 @@
 ////////////////////////////////////////////////////////////////
 
-	eigenstep.sage - need a better name for this
+	frames.sage - calculations with frames and eigensteps
 
 ////////////////////////////////////////////////////////////////
 
-eigensteps.sage is a ugly sage script - more POC as actually usefull.
-
- - it is not interactive.
- - you have to set the starting values by yourself in the script.
-
- - you MUST provide a matrix lA with valid eigensteps.
- - this matrix MUST have the first row all zero.
-
-That script is realy not for publishing
+frames.sage can do the following things:
+ - `Eigensteps(F)` calculates the eigensteps of a frame F
+ - `EigenstepsGram(F) calculate outer eigensteps
+ - `FrameFromEigensteps(lam) constructs a frame from a given
+   sequence of eigensteps
+ - `PolytopeOfEigensteps(mu, lam)` constructs the polytope of
+   eigensteps for given sequences of norm squares and eigenvalues
+ - `PolytopeOfEigensteps(N, d, mu)` does the same for equal
+   norm tight frames
+ - `anInteriorPointENT(N, d, mu)` calculates an interior point
+   of a polytope of eigensteps of equal norm tight frames
+ - `Psi(lam)` and `Phi(lam)` apply affine isomorphisms mentioned
+   in our paper "Polytopes of Eigensteps of Finite Equal Norm
+   Tight Frames"
+ - `v_to_matrix(v, N)` and `matrix_to_v(lam)` convert between
+   different formats of sequences of eigensteps (matrices can't
+   be points of polytopes in sage)
+ - `NaimarkComplementPF(F)` calculates a Naimark complement of
+   the Parseval frame F
