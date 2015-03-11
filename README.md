@@ -1,10 +1,9 @@
-////////////////////////////////////////////////////////////////
+# a collection of sage scripts
 
-	frames.sage - calculations with frames and eigensteps
+## frames.sage -- calculations with frames and eigensteps
 
-////////////////////////////////////////////////////////////////
+`frames.sage` can do the following things:
 
-frames.sage can do the following things:
  - `Eigensteps(F)` calculates the eigensteps of a frame F
  - `EigenstepsGram(F) calculate outer eigensteps
  - `FrameFromEigensteps(lam) constructs a frame from a given
