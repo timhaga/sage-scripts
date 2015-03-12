@@ -20,5 +20,7 @@
  - `v_to_matrix(v, N)` and `matrix_to_v(lam)` convert between
    different formats of sequences of eigensteps (matrices can't
    be points of polytopes in sage)
- - `NaimarkComplementPF(F)` calculates a Naimark complement of
-   the Parseval frame F
+ - `NaimarkComplement(F)` calculates a Naimark complement of
+   a Bessel sequence
+ - `CanonicalCompletion(F)` calculates the canonical completion
+   of a Bessel sequence to a tight frame

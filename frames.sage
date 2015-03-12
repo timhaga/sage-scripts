@@ -314,3 +314,90 @@ def NaimarkComplementPF(F):
     G = M[d:N,:]
 
     return G
+
+def CanonicalCompletion(F):
+    r"""
+    Compute the canonical completion of F to a tight frame
+
+    INPUT:
+
+    - ``F`` -- a Bessel sequence
+
+    OUTPUT:
+
+    The canonical completion
+    """
+    N = F.ncols()
+    d = F.nrows()
+
+    FF = F*F.conjugate_transpose()
+
+    # obtain current spectrum
+    ev = sorted(FF.eigenvectors_right(), reverse=True)
+    # obtain upper frame bound
+    B = ev[0][0]
+    # current multiplicity
+    K = ev[0][2]
+
+    if K==d:
+        return F
+
+    # construct list of remaining eigenvalues and eigenvectors
+    lamphi = []
+    for e in ev[1:]:
+        for phi in e[1]:
+            lamphi.append( (e[0], phi) )
+
+    # calculate canonical completion to a B-tight frame
+    H = matrix(map(lambda (lam, phi) : sqrt(B-lam)*phi, lamphi)).transpose()
+
+    FH = F.augment(H)
+
+    assert(FH*FH.conjugate_transpose() == B*identity_matrix(d))
+    
+    return FH
+
+def NaimarkComplement(F):
+    r"""
+    Compute a Naimark complement of a Bessel sequence
+
+    INPUT:
+
+    - ``F`` -- a Bessel sequence
+
+    OUTPUT:
+
+    A Naimark complement of F
+    """
+    N = F.ncols()
+    d = F.nrows()
+
+    F_t = CanonicalCompletion(F)
+    N_t = F_t.ncols()
+
+    FF_t = F_t*F_t.conjugate_transpose()
+    B = FF_t[0,0]
+    assert(FF_t == B*identity_matrix(d))
+
+    M = F_t/sqrt(B)
+
+    # Extend to ONB using Gram Schmidt
+    for i in xrange(0, N_t):
+        U = span(M)
+        e_i = matrix(1,N_t)
+        e_i[0,i] = 1
+        e_i = e_i[0]
+        
+        if e_i not in U:
+            x = e_i
+            for j in xrange(0, M.nrows()):
+                x -= (e_i * M[j]) * M[j]
+            x = x / x.norm()
+            M = M.stack(x)
+
+    assert(M.is_unitary())
+
+    # Obtain Naimark complement
+    G = M[d:N_t,:]
+
+    return G[:,:N]*sqrt(B)
