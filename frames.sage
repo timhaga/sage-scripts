@@ -138,7 +138,7 @@ def PolytopeOfEigensteps(mu, lam):
     eqs = Set()
     # First column is zero, last column is lam_i
     for j in xrange(0,d):
-        eqs += Set([x[j,0], x[j,N]-lam[d-j-1]])
+        eqs += Set([x[j,0], x[j,N]-lam[j]])
 
     # The other columns sum to mu_n
     for n in xrange(1,N+1):
