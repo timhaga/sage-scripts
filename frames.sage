@@ -25,7 +25,7 @@ def EigenstepsGram(F):
 
     OUTPUT:
 
-    a list of spectra of partial Gram matrices F
+    a list of spectra of partial Gram matrices
     """
     N = F.ncols()
     return [
