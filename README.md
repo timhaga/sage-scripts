@@ -10,7 +10,7 @@
    sequence of eigensteps
  - `PolytopeOfEigensteps(mu, lam)` constructs the polytope of
    eigensteps for given sequences of norm squares and eigenvalues
- - `PolytopeOfEigensteps(N, d, mu)` does the same for equal
+ - `PolytopeOfEigenstepsENT(N, d, mu)` does the same for equal
    norm tight frames
  - `anInteriorPointENT(N, d, mu)` calculates an interior point
    of a polytope of eigensteps of equal norm tight frames
