@@ -401,3 +401,69 @@ def NaimarkComplement(F):
     G = M[d:N_t,:]
 
     return G[:,:N]*sqrt(B)
+
+
+
+def PolytopeOfEigenstepsMu(mu, d):
+    r"""
+    Construct the polytope of eigensteps when just norms are given
+
+    INPUT:
+
+    - ``mu`` -- a list of norm squares
+    - ``d`` -- dimension of Hilbert space
+
+    OUTPUT:
+
+    The polytope of eigensteps
+    """
+    N = len(mu)
+
+    # Matrix of variables
+    x = matrix(SR, d, N+1)
+    for n in xrange(0, N+1):
+        for j in xrange(0, d):
+            x[j,n] = var("x_%d_%d" % (j+1, n))
+
+    # Collect the interlacing conditions
+    ineqs = Set()
+    for n in xrange(0,N):
+        for j in xrange(0,d):
+            ineqs += Set([x[j,n+1] - x[j,n]])
+        for j in xrange(0,d-1):
+            ineqs += Set([x[j,n] - x[j+1,n+1]])
+
+    # Collect equalities
+    eqs = Set()
+    # First column is zero
+    for j in xrange(0,d):
+        eqs += Set([x[j,0]])
+
+    # The other columns sum to mu_n
+    for n in xrange(1,N+1):
+        S = SR(0)
+        for j in xrange(0,d):
+            S += x[j,n]
+        eqs += Set([S-sum(mu[:n])])
+
+    # Transform the inequalities into a list as needed for Polyhedron()
+    ineqs_l = []
+    for ineq in ineqs:
+        ineq_l = [ineq.polynomial(SR).constant_coefficient()]
+        for j in xrange(0, d):
+            for n in xrange(0, N+1):
+                y = x[j,n]
+                ineq_l.append(ineq.coefficient(y,1))
+        ineqs_l.append(ineq_l)
+    # Same for equalities
+    eqs_l = []
+    for eq in eqs:
+        eq_l = [eq.polynomial(SR).constant_coefficient()]
+        for j in xrange(0, d):
+            for n in xrange(0, N+1):
+                y = x[j,n]
+                eq_l.append(eq.coefficient(y,1))
+        eqs_l.append(eq_l)
+
+    # Create the polytope
+    return Polyhedron(eqns=eqs_l, ieqs=ineqs_l, backend='ppl', base_ring=QQ)
