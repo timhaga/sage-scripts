@@ -16,7 +16,7 @@
    of a polytope of eigensteps of equal norm tight frames
  - `Psi(lam)` and `Phi(lam)` apply affine isomorphisms mentioned
    in our paper "Polytopes of Eigensteps of Finite Equal Norm
-   Tight Frames"
+   Tight Frames" (http://arxiv.org/abs/1507.04197)
  - `v_to_matrix(v, N)` and `matrix_to_v(lam)` convert between
    different formats of sequences of eigensteps (matrices can't
    be points of polytopes in sage)
