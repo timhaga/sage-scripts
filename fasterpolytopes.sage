@@ -49,12 +49,9 @@ def showPoint(N,d,p,**options):
     pos = poset(N,d)
     graph = pos.hasse_diagram()
 
-    from collections import defaultdict
-    heights = defaultdict(list)
-    for i in pos:
-        heights[pos.rank(i)].append(i)
+    positions = {(i,j):(i-j,i+j) for (i,j) in pairs(N,d)}
 
-    Gplot = graph.graphplot(layout='acyclic', heights=heights, vertex_size=700, **options)
+    Gplot = graph.graphplot(vertex_size=700, pos=positions, **options)
 
     node_list = Gplot._nodelist
     pos_dict = Gplot._pos
