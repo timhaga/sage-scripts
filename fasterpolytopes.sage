@@ -54,7 +54,7 @@ def showPoint(N,d,p,colorize=True,**options):
 
     if colorize:
         ps = list(pairs(N,d))
-        options['partition'] = [[ps[i] for i in xrange(d*(N-d)-2) if v[i]==val] for val in set(p)]
+        options['partition'] = [[ps[i] for i in xrange(d*(N-d)-2) if p[i]==val] for val in set(p)]
 
     Gplot = graph.graphplot(**options)
 
