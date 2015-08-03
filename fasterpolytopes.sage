@@ -50,7 +50,7 @@ def partitionOfPoint(N,d,p):
     labels = [0, N] + p
     return SetPartition([[ps[i] for i in xrange(d*(N-d)) if labels[i]==val] for val in set(labels)])
 
-def showPoint(N,d,p,colorize=True,**options):
+def showPoint(N,d,p,labels=None,colorize=True,**options):
     #pos = poset(N,d)
     pos = Poset((['bottom', 'top']+list(pairs(N,d)),
                  [('bottom', (1,1)), ((N-d,d), 'top')]+
@@ -71,6 +71,7 @@ def showPoint(N,d,p,colorize=True,**options):
 
     node_list = Gplot._nodelist
     pos_dict = Gplot._pos
-    labels = [0, N] + p
+    if labels == None:
+        labels = [0, N] + p
     Gplot._plot_components['vertex_labels'] = [text(label, pos_dict[node], rgbcolor=(0,0,0), zorder=8) for node,label in zip(node_list,labels)]
     return Gplot.plot()
