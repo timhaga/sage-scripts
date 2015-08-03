@@ -45,16 +45,20 @@ def eigenstepPolytope(N,d):
     return Polyhedron(eqns=eqns(N,d), ieqs=ineqs(N,d),
             backend='ppl', base_ring=QQ)
 
-def showPoint(N,d,p,**options):
+def showPoint(N,d,p,colorize=True,**options):
     pos = poset(N,d)
     graph = pos.hasse_diagram()
 
-    positions = {(i,j):(i-j,i+j) for (i,j) in pairs(N,d)}
+    options['pos'] = {(i,j):(i-j,i+j) for (i,j) in pairs(N,d)}
+    options['vertex_size'] = 700
 
-    Gplot = graph.graphplot(vertex_size=700, pos=positions, **options)
+    if colorize:
+        ps = list(pairs(N,d))
+        options['partition'] = [[ps[i] for i in xrange(d*(N-d)-2) if v[i]==val] for val in set(p)]
+
+    Gplot = graph.graphplot(**options)
 
     node_list = Gplot._nodelist
     pos_dict = Gplot._pos
     Gplot._plot_components['vertex_labels'] = [text(label, pos_dict[node], rgbcolor=(0,0,0), zorder=8) for node,label in zip(node_list,p)]
-
     return Gplot.plot()
