@@ -46,15 +46,21 @@ def eigenstepPolytope(N,d):
             backend='ppl', base_ring=QQ)
 
 def partitionOfPoint(N,d,p):
-    ps = list(pairs(N,d))
-    return SetPartition([[ps[i] for i in xrange(d*(N-d)-2) if p[i]==val] for val in set(p)])
+    ps = ['bottom', 'top']+list(pairs(N,d))
+    labels = [0, N] + p
+    return SetPartition([[ps[i] for i in xrange(d*(N-d)) if labels[i]==val] for val in set(labels)])
 
 def showPoint(N,d,p,colorize=True,**options):
-    pos = poset(N,d)
+    #pos = poset(N,d)
+    pos = Poset((['bottom', 'top']+list(pairs(N,d)),
+                 [('bottom', (1,1)), ((N-d,d), 'top')]+
+                   list(cover_relations(N,d))), cover_relations=True)
     graph = pos.hasse_diagram()
 
     opts = {}
     opts['pos'] = {(i,j):(i-j,i+j) for (i,j) in pairs(N,d)}
+    opts['pos']['bottom'] = (0,1)
+    opts['pos']['top'] = (N-2*d,N+1)
     opts['vertex_size'] = 700
 
     if colorize:
@@ -65,5 +71,6 @@ def showPoint(N,d,p,colorize=True,**options):
 
     node_list = Gplot._nodelist
     pos_dict = Gplot._pos
-    Gplot._plot_components['vertex_labels'] = [text(label, pos_dict[node], rgbcolor=(0,0,0), zorder=8) for node,label in zip(node_list,p)]
+    labels = [0, N] + p
+    Gplot._plot_components['vertex_labels'] = [text(label, pos_dict[node], rgbcolor=(0,0,0), zorder=8) for node,label in zip(node_list,labels)]
     return Gplot.plot()
