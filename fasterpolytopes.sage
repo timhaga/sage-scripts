@@ -75,3 +75,15 @@ def showPoint(N,d,p,labels=None,colorize=True,**options):
         labels = [0, N] + p
     Gplot._plot_components['vertex_labels'] = [text(label, pos_dict[node], rgbcolor=(0,0,0), zorder=8) for node,label in zip(node_list,labels)]
     return Gplot.plot()
+
+def showFacePartition(N,d,F):
+    elems = ['bottom', 'top'] + list(pairs(N,d))
+    x = [0 for e in elems]
+    singleblockpartition = SetPartition([elems])
+    vs = F.as_polyhedron().vertices_list()
+    pi = singleblockpartition
+    for v in vs:
+        pi *= partitionOfPoint(N,d,v)
+    labels = [sum([j*ZZ(elem in b) for j,b in enumerate(pi)])+1
+              for elem in elems]
+    return showPoint(N,d,x,colorize=False,labels=labels,partition=pi)
